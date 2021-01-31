@@ -48,19 +48,20 @@ const titleClickHandler = function (event) {
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags.list';
+  optArticleTagsSelector = '.post-tags.list',
+  optArticleAuthorSelector = '.post-author';
 
-const generateTitleLinks = function () {
+const generateTitleLinks = function (customSelector = '') {
 
   /* remove contents of titleList */
 
-  const titleList = document.querySelector(optTitleListSelector);
+  const titleList = document.querySelector(optTitleListSelector + customSelector);
   titleList.innerHTML = '';
 
 
   /* for each article */
   let html = '';
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(optArticleSelector );
   for (let article of articles) {
 
     /* get article id */
@@ -193,12 +194,51 @@ generateTitleLinks('[data-tags~="' + tag + '"]');
 
 function addClickListenersToTags() {
   /* find all links to tags */
+  const linkTags = document.querySelectorAll('a[href^="#tag="]');
 
   /* START LOOP: for each link */
+  for(let linkTag of LinkTags){
 
   /* add tagClickHandler as event listener for that link */
-
+  linkTag.addEventListener('click', tagClickHandler);
   /* END LOOP: for each link */
+  }
+}
+generateTags();
+addClickListenersToTags();
+
+/* Generate Authors */
+function generateAuthors(){
+
+  /* find every author */
+  const articles = document.querySelectorAll(optArticleSelector);
+
+  /*START LOOP for every authon */
+  for(let article of articles){
+    
+    /* find authors wrapper */
+    const authorWrapper = article.querySelector(optArticleAuthorSelector);
+    console.log(authorWrapper);
+
+    /* generate HTML of the link */
+    let html ='';
+
+    /* get author from data-tags attribute */
+    const tagAuthor = article.getAttribute('data-author');
+
+    /* generate HTML of the link */
+    const linkHTMLData = { id: tagAuthor, title: tagAuthor };
+    const linkHTML = templates.AuthorLink(linkHTMLData);
+
+    /* add generated code to html variable */
+    html = html + linkHTML;
+  }
+  /* END LOOP: for each tag */
+
+  authorWrapper.innerHTML = html;
+
+  /* END LOOP: for every article: */
 }
 
-addClickListenersToTags();
+generateAuthors();
+
