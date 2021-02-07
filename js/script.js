@@ -49,7 +49,10 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags.list',
-  optArticleAuthorSelector = '.post-author';
+  optArticleAuthorSelector = '.post-author',
+  optCloudClassCount = 5,
+  optCloudClassPrefix = tag-size-;
+
 
 const generateTitleLinks = function (customSelector = '') {
 
@@ -97,9 +100,34 @@ const generateTitleLinks = function (customSelector = '') {
 
 generateTitleLinks();
 
-/* Generate Tags */
+const calculateTagClass = function(count, params){
+  
+}
 
+
+/* Generate Tags */
+const calculateTagsParams = function(tags){
+  const params = {
+    max: 0,
+    min: 999999,
+  }
+  for(let tag in tags){
+    console.log(tag + 'is used ' + tags[tag] + ' times');
+    if(tags[tag] > params.max){
+      params.max = tags[tag];
+    }
+    if(tags[tag] < params.min){
+      params.min = tags[tag];
+    }
+  }
+
+  return(params);
+}
 function generateTags() {
+  /* [NEW] create a new variable allTags with an empty object */
+  let allTags = {};
+  console.log('tagsParams', tagsParams);
+
   /* find all articles */
 
   const articles = document.querySelectorAll('.post');
@@ -141,7 +169,16 @@ function generateTags() {
       /* add generated code to html variable */
 
       html = html + linkHTML;
+
+      /* [NEW] check if this link is NOT already in allTags */
+      if(!allTags[tag]){
+        /* [NEW] add generated code to allTags object */
+        allTags[tag] = 1;
+      } else {
+        allTags[tag]++;
+      }
     }
+
     /* END LOOP: for each tag */
   }
   /* insert HTML of all the links into the tags wrapper */
@@ -150,6 +187,26 @@ function generateTags() {
 
   /* END LOOP: for every article: */
 }
+
+/* [NEW] find list of tags in right column */
+const tagList = document.querySelector('.tags');
+
+/* [NEW] add html from allTags to tagList */
+// tagList.innerHTML = allTags.join(' ');
+// console.log(allTags);
+
+/* [NEW] create variable for all links HTML code */
+let allTagsHTML = '';
+
+/* START LOOP: for each tag in allTags: */
+for(let tag in allTags){
+  /* [NEW] generate code of a link and add it to allTagsHTML */
+  allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+}
+/* [NEW] END LOOP: for each tag in allTags: */
+
+/* [NEW] add HTML from allTagsGtML to tagList */
+tagList.innerHTML = allTagsHTML;
 
 generateTags();
 
