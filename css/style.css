@@ -104,11 +104,16 @@ body {
   display: flex;
 }
 
+<<<<<<< HEAD
 .post-tags p {
   margin: 0 10px 0 0;
 }
 
 /* Tags */
+=======
+/* Tags */
+
+>>>>>>> c5663ebf62450217a1c808c1cac2b40f673568cd
 .tag-size-1 {
   font-size: 10px;
   color: #000;
@@ -133,4 +138,7 @@ body {
   font-size: 18px;
   color: #9F16C1;
 }
+<<<<<<< HEAD
 /*# sourceMappingURL=style.css.map */
+=======
+>>>>>>> c5663ebf62450217a1c808c1cac2b40f673568cd
